@@ -21,5 +21,20 @@ mat<-matrix(c(dep_50_raw, sa_50_raw, Tem_50_raw), nrow = 3, byrow = T)
 dim(mat)
 row.names(mat)<-c('depth', 'salinity', 'temperature')
 
+#start using a loop to clean data
 
+for (i in 1:dim(mat)[2]) {
+if(is.na(mat[2,i])==TRUE | is.na(mat[3,i])==TRUE){
+  mat[,i]<-NA
+}  
+}
 
+#subset the numeric data and then create the cleaned matrix
+dep_50_raw<-mat[1,][is.na(mat[1,])==F]
+sa_50_raw<-mat[2,][is.na(mat[2,])==F]
+Tem_50_raw<-mat[3,][is.na(mat[3,])==F]
+mat<-matrix(c(dep_50_raw, sa_50_raw, Tem_50_raw), nrow = 3, byrow = T)
+row.names(mat)<-c('depth', 'salinity', 'temperature')
+dim(mat)
+sum(is.na(mat[3,]))
+plot(mat[2,], mat[3,], xlab = 'salinity', ylab = 'temp')
