@@ -42,5 +42,27 @@ dim(mat)
 sum(is.na(mat[3,]))
 
 #plot the matrix
-plot(mat[2,], mat[3,], xlab = 'salinity', ylab = 'temp', main = 'depth=0m', col='green')
+plot(mat[3,], mat[2,], xlab = 'temp', ylab = 'salinity', main = 'depth=0m', col='green', xlim = c(0, 1.1*max(mat[3,])), ylim = c(0, 1.1*max(mat[2,])))
 dev.off()
+dim(m)
+dim(mat)
+
+#Call the DataAnalyze library and fit the fit_2D function
+x<-mat[3,]
+f<-function(v){
+  y<-v[1]*x+v[2]
+  return(y)
+}
+library(DataAnalyze1.0)
+dat<-matrix(c(mat[2,],mat[3,]), nrow = 2, byrow = T)
+v<-c(2,0)
+lines(x,f(v))
+help("lines")
+lines(x,x^2)
+line(x,x^2)
+lines(x,f(v), col='red')
+plot(x,f(v))
+min(x)
+fit_2D(f,op_v = v, it=20000, dat = dat )
+v<-c(0.136, 31.206)
+lines(x,f(v))
